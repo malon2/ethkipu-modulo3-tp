@@ -6,6 +6,97 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "allowance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "needed",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC20InsufficientAllowance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "needed",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC20InsufficientBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "approver",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidApprover",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidReceiver",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidSender",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidSpender",
+				"type": "error"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -22,41 +113,23 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "provider",
+						"name": "owner",
 						"type": "address"
 					},
 					{
-						"indexed": false,
+						"indexed": true,
 						"internalType": "address",
-						"name": "tokenA",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "tokenB",
+						"name": "spender",
 						"type": "address"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amountA",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountB",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "liquidity",
+						"name": "value",
 						"type": "uint256"
 					}
 				],
-				"name": "LiquidityAdded",
+				"name": "Approval",
 				"type": "event"
 			},
 			{
@@ -65,90 +138,35 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "provider",
+						"name": "from",
 						"type": "address"
 					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "tokenA",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "tokenB",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountA",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountB",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "liquidity",
-						"type": "uint256"
-					}
-				],
-				"name": "LiquidityRemoved",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "sender",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "tokenIn",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "tokenOut",
+						"name": "to",
 						"type": "address"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amountIn",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountOut",
+						"name": "value",
 						"type": "uint256"
 					}
 				],
-				"name": "Swap",
+				"name": "Transfer",
 				"type": "event"
 			},
 			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "tokenA",
+						"name": "_tokenA",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "tokenB",
+						"name": "_tokenB",
 						"type": "address"
 					},
 					{
@@ -206,6 +224,86 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "amountIn",
 						"type": "uint256"
@@ -225,7 +323,7 @@
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "amountOut",
+						"name": "",
 						"type": "uint256"
 					}
 				],
@@ -236,12 +334,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "tokenA",
+						"name": "_tokenA",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "tokenB",
+						"name": "_tokenB",
 						"type": "address"
 					}
 				],
@@ -257,15 +355,28 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "tokenA",
+						"name": "_tokenA",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "tokenB",
+						"name": "_tokenB",
 						"type": "address"
 					},
 					{
@@ -311,6 +422,32 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "reserveA",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "reserveB",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -339,11 +476,110 @@
 					}
 				],
 				"name": "swapExactTokensForTokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
 				"outputs": [
 					{
-						"internalType": "uint256[]",
-						"name": "amounts",
-						"type": "uint256[]"
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenA",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenB",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -351,38 +587,202 @@
 			}
 		],
 		"devdoc": {
+			"details": "Inherits ERC20 to represent LP tokens. Tokens are set at first addLiquidity call.",
 			"errors": {
+				"ERC20InsufficientAllowance(address,uint256,uint256)": [
+					{
+						"details": "Indicates a failure with the `spender`’s `allowance`. Used in transfers.",
+						"params": {
+							"allowance": "Amount of tokens a `spender` is allowed to operate with.",
+							"needed": "Minimum amount required to perform a transfer.",
+							"spender": "Address that may be allowed to operate on tokens without being their owner."
+						}
+					}
+				],
+				"ERC20InsufficientBalance(address,uint256,uint256)": [
+					{
+						"details": "Indicates an error related to the current `balance` of a `sender`. Used in transfers.",
+						"params": {
+							"balance": "Current balance for the interacting account.",
+							"needed": "Minimum amount required to perform a transfer.",
+							"sender": "Address whose tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidApprover(address)": [
+					{
+						"details": "Indicates a failure with the `approver` of a token to be approved. Used in approvals.",
+						"params": {
+							"approver": "Address initiating an approval operation."
+						}
+					}
+				],
+				"ERC20InvalidReceiver(address)": [
+					{
+						"details": "Indicates a failure with the token `receiver`. Used in transfers.",
+						"params": {
+							"receiver": "Address to which tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidSender(address)": [
+					{
+						"details": "Indicates a failure with the token `sender`. Used in transfers.",
+						"params": {
+							"sender": "Address whose tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidSpender(address)": [
+					{
+						"details": "Indicates a failure with the `spender` to be approved. Used in approvals.",
+						"params": {
+							"spender": "Address that may be allowed to operate on tokens without being their owner."
+						}
+					}
+				],
 				"SafeERC20FailedOperation(address)": [
 					{
 						"details": "An operation with an ERC-20 token failed."
 					}
 				]
 			},
+			"events": {
+				"Approval(address,address,uint256)": {
+					"details": "Emitted when the allowance of a `spender` for an `owner` is set by a call to {approve}. `value` is the new allowance."
+				},
+				"Transfer(address,address,uint256)": {
+					"details": "Emitted when `value` tokens are moved from one account (`from`) to another (`to`). Note that `value` may be zero."
+				}
+			},
 			"kind": "dev",
-			"methods": {},
-			"title": "SimpleSwap - A simplified Uniswap-like contract",
+			"methods": {
+				"addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)": {
+					"params": {
+						"_tokenA": "Address of token A",
+						"_tokenB": "Address of token B",
+						"amountADesired": "Desired amount of token A to deposit",
+						"amountAMin": "Minimum acceptable amount of token A",
+						"amountBDesired": "Desired amount of token B to deposit",
+						"amountBMin": "Minimum acceptable amount of token B",
+						"deadline": "Timestamp after which transaction is invalid",
+						"to": "Address receiving LP tokens"
+					},
+					"returns": {
+						"amountA": "Actual amount of token A deposited",
+						"amountB": "Actual amount of token B deposited",
+						"liquidity": "Amount of LP tokens minted"
+					}
+				},
+				"allowance(address,address)": {
+					"details": "See {IERC20-allowance}."
+				},
+				"approve(address,uint256)": {
+					"details": "See {IERC20-approve}. NOTE: If `value` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
+				},
+				"balanceOf(address)": {
+					"details": "See {IERC20-balanceOf}."
+				},
+				"constructor": {
+					"details": "Initializes LP token with name and symbol"
+				},
+				"decimals()": {
+					"details": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the default value returned by this function, unless it's overridden. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
+				},
+				"getAmountOut(uint256,uint256,uint256)": {
+					"params": {
+						"amountIn": "Amount of input token",
+						"reserveIn": "Reserve of input token",
+						"reserveOut": "Reserve of output token"
+					},
+					"returns": {
+						"_0": "Output token amount"
+					}
+				},
+				"getPrice(address,address)": {
+					"params": {
+						"_tokenA": "Address of token A",
+						"_tokenB": "Address of token B"
+					},
+					"returns": {
+						"price": "Price with 18 decimals (tokenB per tokenA)"
+					}
+				},
+				"name()": {
+					"details": "Returns the name of the token."
+				},
+				"removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)": {
+					"params": {
+						"_tokenA": "Address of token A",
+						"_tokenB": "Address of token B",
+						"amountAMin": "Minimum amount of token A to receive",
+						"amountBMin": "Minimum amount of token B to receive",
+						"deadline": "Timestamp after which transaction is invalid",
+						"liquidity": "Amount of LP tokens to burn",
+						"to": "Address receiving the underlying tokens"
+					},
+					"returns": {
+						"amountA": "Amount of token A returned",
+						"amountB": "Amount of token B returned"
+					}
+				},
+				"swapExactTokensForTokens(uint256,uint256,address[],address,uint256)": {
+					"params": {
+						"amountIn": "Amount of input token to send",
+						"amountOutMin": "Minimum acceptable amount of output token",
+						"deadline": "Timestamp after which transaction is invalid",
+						"path": "Array with [tokenIn, tokenOut] addresses",
+						"to": "Address to receive the output token"
+					}
+				},
+				"symbol()": {
+					"details": "Returns the symbol of the token, usually a shorter version of the name."
+				},
+				"totalSupply()": {
+					"details": "See {IERC20-totalSupply}."
+				},
+				"transfer(address,uint256)": {
+					"details": "See {IERC20-transfer}. Requirements: - `to` cannot be the zero address. - the caller must have a balance of at least `value`."
+				},
+				"transferFrom(address,address,uint256)": {
+					"details": "See {IERC20-transferFrom}. Skips emitting an {Approval} event indicating an allowance update. This is not required by the ERC. See {xref-ERC20-_approve-address-address-uint256-bool-}[_approve]. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `from` and `to` cannot be the zero address. - `from` must have a balance of at least `value`. - the caller must have allowance for ``from``'s tokens of at least `value`."
+				}
+			},
+			"title": "SimpleSwap",
 			"version": 1
 		},
 		"userdoc": {
 			"kind": "user",
 			"methods": {
 				"addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)": {
-					"notice": "Add liquidity to a pool"
+					"notice": "Adds liquidity to the pool and mints LP tokens"
 				},
 				"getAmountOut(uint256,uint256,uint256)": {
-					"notice": "Get output amount given input and reserves"
+					"notice": "Computes output amount for a given input and reserves"
 				},
 				"getPrice(address,address)": {
-					"notice": "Get price of tokenA in terms of tokenB"
+					"notice": "Returns the price of tokenA in terms of tokenB"
 				},
 				"removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)": {
-					"notice": "Remove liquidity from a pool"
+					"notice": "Removes liquidity and burns LP tokens"
+				},
+				"reserveA()": {
+					"notice": "Current reserve of token A"
+				},
+				"reserveB()": {
+					"notice": "Current reserve of token B"
 				},
 				"swapExactTokensForTokens(uint256,uint256,address[],address,uint256)": {
-					"notice": "Swap exact tokens for tokens"
+					"notice": "Swaps an exact amount of input tokens for output tokens"
+				},
+				"tokenA()": {
+					"notice": "Token A address (set at first liquidity addition)"
+				},
+				"tokenB()": {
+					"notice": "Token B address (set at first liquidity addition)"
 				}
 			},
-			"notice": "Allows adding/removing liquidity and swapping between two ERC-20 tokens",
+			"notice": "Automated Market Maker (AMM) supporting a single token pair with internal LP token.",
 			"version": 1
 		}
 	},
@@ -426,6 +826,22 @@
 				"dweb:/ipfs/QmWohqcBLbcxmA4eGPhZDXe5RYMMEEpFq22nfkaUMvTfw1"
 			]
 		},
+		"@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
+			"keccak256": "0x880da465c203cec76b10d72dbd87c80f387df4102274f23eea1f9c9b0918792b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://399594cd8bb0143bc9e55e0f1d071d0d8c850a394fb7a319d50edd55d9ed822b",
+				"dweb:/ipfs/QmbPZzgtT6LEm9CMqWfagQFwETbV1ztpECBB1DtQHrKiRz"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0x41f6b3b9e030561e7896dbef372b499cc8d418a80c3884a4d65a68f2fdc7493a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://80b0992a11b2fd1f75ced2971696d07bbd1d19ce6761dd50d8b6d48aa435f42a",
+				"dweb:/ipfs/QmZDe5xd2gXHjVEjv9t8C1KQ68K5T8qFwdinwQgmP3rF3x"
+			]
+		},
 		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
 			"keccak256": "0xe06a3f08a987af6ad2e1c1e774405d4fe08f1694b67517438b467cecf0da0ef7",
 			"license": "MIT",
@@ -434,12 +850,28 @@
 				"dweb:/ipfs/QmeTTxZ7qVk9rjEv2R4CpCwdf8UMCcRqDNMvzNxHc3Fnn9"
 			]
 		},
+		"@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x70f2f713b13b7ce4610bcd0ac9fec0f3cc43693b043abcb8dc40a42a726eb330",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c13d13304ac79a83ab1c30168967d19e2203342ebbd6a9bbce4db7550522dcbf",
+				"dweb:/ipfs/QmeN5jKMN2vw5bhacr6tkg78afbTTZUeaacNHqjWt4Ew1r"
+			]
+		},
 		"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
 			"keccak256": "0x982c5cb790ab941d1e04f807120a71709d4c313ba0bfc16006447ffbd27fbbd5",
 			"license": "MIT",
 			"urls": [
 				"bzz-raw://8150ceb4ac947e8a442b2a9c017e01e880b2be2dd958f1fa9bc405f4c5a86508",
 				"dweb:/ipfs/QmbcBmFX66AY6Kbhnd5gx7zpkgqnUafo43XnmayAM7zVdB"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
 			]
 		},
 		"@openzeppelin/contracts/utils/Panic.sol": {
@@ -475,11 +907,11 @@
 			]
 		},
 		"SimpleSwap.sol": {
-			"keccak256": "0xfbe74ee1f996ea433e4cea41bb79b77c4ddf3a170b470f17648b4449a973ed2b",
+			"keccak256": "0x46baee158cf7e96ff6affeef5dab83315f3bb27b59935306aa06e4afae5e8997",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c592136eb257f87e8994774f94971b2a431acad0d7a2b02550117fb508ef49a6",
-				"dweb:/ipfs/QmeDrx2GJVqmj3gvZrhJ1LmqmoxdHwPMjDgbKHS384qFx8"
+				"bzz-raw://dafe2ad60c917606aacf12d4ce7ce4142a89a5e43af12eab8dbc70b08d28dca8",
+				"dweb:/ipfs/QmYSp57GDg1izUNrRM2wL2XCHU8SMuCPTyCxGqUbF4QaNk"
 			]
 		}
 	},
