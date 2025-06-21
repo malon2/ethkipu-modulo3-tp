@@ -334,12 +334,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_tokenA",
+						"name": "tokenA",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_tokenB",
+						"name": "tokenB",
 						"type": "address"
 					}
 				],
@@ -701,8 +701,8 @@
 				},
 				"getPrice(address,address)": {
 					"params": {
-						"_tokenA": "Address of token A",
-						"_tokenB": "Address of token B"
+						"tokenA": "Address",
+						"tokenB": "Address"
 					},
 					"returns": {
 						"price": "Price with 18 decimals (tokenB per tokenA)"
@@ -906,11 +906,11 @@
 			]
 		},
 		"SimpleSwap.sol": {
-			"keccak256": "0x41d6ae0289a69468b991ea2fea44108956668e73099ca2554653e8107e97d52e",
+			"keccak256": "0x91de70aca21b688d8cb94dd8f6c05d61327ab5c318ce638ef4f479b22ec4ff3f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d9d8e76d3f24bacc44489fb7351e031a6012d01e95583ac26a3e50087409d9bc",
-				"dweb:/ipfs/QmcQrnbhHpYS5pC3wmaLkNpu2nS2MHvnGmX8eZo9pfBfuS"
+				"bzz-raw://25c6848215ac43ba07ada5300f28bef453c7a4b281595a87ffe2f8c8ab27f33c",
+				"dweb:/ipfs/QmNV8gShv8YDcLnJcmEoJ17SYy8AJi5e6Eqn9LKRzF7MFC"
 			]
 		}
 	},
