@@ -161,12 +161,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_tokenA",
+						"name": "tokenA",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_tokenB",
+						"name": "tokenB",
 						"type": "address"
 					},
 					{
@@ -371,12 +371,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_tokenA",
+						"name": "tokenA",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_tokenB",
+						"name": "tokenB",
 						"type": "address"
 					},
 					{
@@ -495,7 +495,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tokenA",
+				"name": "tokenAAddres",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -508,7 +508,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tokenB",
+				"name": "tokenBAddres",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -659,14 +659,14 @@
 			"methods": {
 				"addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)": {
 					"params": {
-						"_tokenA": "Address of token A",
-						"_tokenB": "Address of token B",
 						"amountADesired": "Desired amount of token A to deposit",
 						"amountAMin": "Minimum acceptable amount of token A",
 						"amountBDesired": "Desired amount of token B to deposit",
 						"amountBMin": "Minimum acceptable amount of token B",
 						"deadline": "Timestamp after which transaction is invalid",
-						"to": "Address receiving LP tokens"
+						"to": "Address receiving LP tokens",
+						"tokenA": "Address of token A",
+						"tokenB": "Address of token B"
 					},
 					"returns": {
 						"amountA": "Actual amount of token A deposited",
@@ -713,13 +713,13 @@
 				},
 				"removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)": {
 					"params": {
-						"_tokenA": "Address of token A",
-						"_tokenB": "Address of token B",
 						"amountAMin": "Minimum amount of token A to receive",
 						"amountBMin": "Minimum amount of token B to receive",
 						"deadline": "Timestamp after which transaction is invalid",
 						"liquidity": "Amount of LP tokens to burn",
-						"to": "Address receiving the underlying tokens"
+						"to": "Address receiving the underlying tokens",
+						"tokenA": "Address of token A",
+						"tokenB": "Address of token B"
 					},
 					"returns": {
 						"amountA": "Amount of token A returned",
@@ -775,14 +775,13 @@
 				"swapExactTokensForTokens(uint256,uint256,address[],address,uint256)": {
 					"notice": "Swaps an exact amount of input tokens for output tokens"
 				},
-				"tokenA()": {
+				"tokenAAddres()": {
 					"notice": "Token A address (set at first liquidity addition)"
 				},
-				"tokenB()": {
+				"tokenBAddres()": {
 					"notice": "Token B address (set at first liquidity addition)"
 				}
 			},
-			"notice": "Automated Market Maker (AMM) supporting a single token pair with internal LP token.",
 			"version": 1
 		}
 	},
@@ -907,11 +906,11 @@
 			]
 		},
 		"SimpleSwap.sol": {
-			"keccak256": "0x46baee158cf7e96ff6affeef5dab83315f3bb27b59935306aa06e4afae5e8997",
+			"keccak256": "0x41d6ae0289a69468b991ea2fea44108956668e73099ca2554653e8107e97d52e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://dafe2ad60c917606aacf12d4ce7ce4142a89a5e43af12eab8dbc70b08d28dca8",
-				"dweb:/ipfs/QmYSp57GDg1izUNrRM2wL2XCHU8SMuCPTyCxGqUbF4QaNk"
+				"bzz-raw://d9d8e76d3f24bacc44489fb7351e031a6012d01e95583ac26a3e50087409d9bc",
+				"dweb:/ipfs/QmcQrnbhHpYS5pC3wmaLkNpu2nS2MHvnGmX8eZo9pfBfuS"
 			]
 		}
 	},
