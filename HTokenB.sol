@@ -15,15 +15,15 @@ contract HTokenB is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
         _mint(recipient, 100 * 10 ** decimals());
     }
 
-    function pause() public onlyOwner {
+    function pause() public  {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public  {
         _unpause();
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public  {
         _mint(to, amount);
     }
 

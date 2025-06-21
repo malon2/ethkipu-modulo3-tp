@@ -750,11 +750,11 @@
 			]
 		},
 		"HTokenB.sol": {
-			"keccak256": "0xe5f2e90de1469d4cd82d976dc704a32531c29c2ba7ae080b645c4cbe1311df22",
+			"keccak256": "0x229ca803e56f08501c91b00566ee8a30f3bf4be2c2504fe7c68d916d664a5b26",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://64c23527e6e60ac990a8a806bbd4a314ec9d570dc2717ae8d12cd0f38f1ba256",
-				"dweb:/ipfs/QmP6xfL1qMvcdi5mvSSqrvec1VXAhoZCCn58qTAyg418Sr"
+				"bzz-raw://a979a4d5cef3427209e3db7b13ee18a42af3325e7470722cc62b7a9b2cdd61ce",
+				"dweb:/ipfs/QmRzqsZTnQiywGicXuCsGrLdXdt7xgcqYJeLsBCWUQUh9R"
 			]
 		}
 	},
