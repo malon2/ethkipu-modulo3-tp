@@ -48,38 +48,47 @@ contract SimpleSwap is ERC20 {
     ) external returns (uint256 amountA, uint256 amountB, uint256 liquidity) {
         require(block.timestamp <= deadline, "Expired");
 
-        if (tokenAAddres == address(0) && tokenBAddres == address(0)) {
+        address _tokenAAddres = tokenAAddres;
+        address _tokenBAddres = tokenBAddres;
+
+        if (_tokenAAddres == address(0) && _tokenBAddres == address(0)) {
             require(tokenA != tokenB, "Tokens must differ");
             tokenAAddres = tokenA;
             tokenBAddres = tokenB;
+            _tokenAAddres = tokenA;
+            _tokenBAddres = tokenB;
         } else {
             require(
-                (tokenA == tokenAAddres && tokenB == tokenBAddres) ||
-                (tokenA == tokenBAddres && tokenB == tokenAAddres),
+                (tokenA == _tokenAAddres && tokenB == _tokenBAddres) ||
+                (tokenA == _tokenBAddres && tokenB == _tokenAAddres),
                 "Invalid token pair"
             );
         }
 
-        if (totalSupply() == 0) {
+        uint256 _reserveA = reserveA;
+        uint256 _reserveB = reserveB;
+        uint256 _totalSupply = totalSupply();
+
+        if (_totalSupply == 0) {
             amountA = amountADesired;
             amountB = amountBDesired;
             liquidity = Math.sqrt(amountA * amountB);
         } else {
             amountA = amountADesired;
-            amountB = (amountA * reserveB) / reserveA;
+            amountB = (amountA * _reserveB) / _reserveA;
             require(amountB <= amountBDesired, "Too much B");
-            liquidity = (amountA * totalSupply()) / reserveA;
+            liquidity = (amountA * _totalSupply) / _reserveA;
         }
 
         require(amountA >= amountAMin, "Low A");
         require(amountB >= amountBMin, "Low B");
         require(liquidity > 0, "Zero liquidity");
 
-        IERC20(tokenAAddres).safeTransferFrom(msg.sender, address(this), amountA);
-        IERC20(tokenBAddres).safeTransferFrom(msg.sender, address(this), amountB);
+        IERC20(_tokenAAddres).safeTransferFrom(msg.sender, address(this), amountA);
+        IERC20(_tokenBAddres).safeTransferFrom(msg.sender, address(this), amountB);
 
-        reserveA += amountA;
-        reserveB += amountB;
+        reserveA = _reserveA + amountA;
+        reserveB = _reserveB + amountB;
         _mint(to, liquidity);
     }
 
@@ -103,27 +112,35 @@ contract SimpleSwap is ERC20 {
         uint256 deadline
     ) external returns (uint256 amountA, uint256 amountB) {
         require(block.timestamp <= deadline, "Expired");
+
+        address _tokenAAddres = tokenAAddres;
+        address _tokenBAddres = tokenBAddres;
+
         require(
-            (tokenA == tokenAAddres && tokenB == tokenBAddres) ||
-            (tokenA == tokenBAddres && tokenB == tokenAAddres),
+            (tokenA == _tokenAAddres && tokenB == _tokenBAddres) ||
+            (tokenA == _tokenBAddres && tokenB == _tokenAAddres),
             "Invalid token pair"
         );
 
-        uint256 totalLiq = totalSupply();
+        uint256 _reserveA = reserveA;
+        uint256 _reserveB = reserveB;
+        uint256 _totalSupply = totalSupply();
+
         require(balanceOf(msg.sender) >= liquidity, "Not enough LP");
 
-        amountA = (liquidity * reserveA) / totalLiq;
-        amountB = (liquidity * reserveB) / totalLiq;
+        amountA = (liquidity * _reserveA) / _totalSupply;
+        amountB = (liquidity * _reserveB) / _totalSupply;
 
         require(amountA >= amountAMin, "Low A");
         require(amountB >= amountBMin, "Low B");
 
         _burn(msg.sender, liquidity);
-        reserveA -= amountA;
-        reserveB -= amountB;
 
-        IERC20(tokenAAddres).safeTransfer(to, amountA);
-        IERC20(tokenBAddres).safeTransfer(to, amountB);
+        reserveA = _reserveA - amountA;
+        reserveB = _reserveB - amountB;
+
+        IERC20(_tokenAAddres).safeTransfer(to, amountA);
+        IERC20(_tokenBAddres).safeTransfer(to, amountB);
     }
 
     /// @notice Swaps an exact amount of input tokens for output tokens
@@ -145,23 +162,25 @@ contract SimpleSwap is ERC20 {
         address tokenIn = path[0];
         address tokenOut = path[1];
 
+        address _tokenAAddres = tokenAAddres;
+        address _tokenBAddres = tokenBAddres;
+
         require(
-            (tokenIn == tokenAAddres && tokenOut == tokenBAddres) ||
-            (tokenIn == tokenBAddres && tokenOut == tokenAAddres),
+            (tokenIn == _tokenAAddres && tokenOut == _tokenBAddres) ||
+            (tokenIn == _tokenBAddres && tokenOut == _tokenAAddres),
             "Invalid swap path"
         );
 
-        (uint256 reserveIn, uint256 reserveOut) = tokenIn == tokenAAddres
+        (uint256 reserveIn, uint256 reserveOut) = tokenIn == _tokenAAddres
             ? (reserveA, reserveB)
             : (reserveB, reserveA);
 
         IERC20(tokenIn).safeTransferFrom(msg.sender, address(this), amountIn);
 
         uint256 amountOut = (amountIn * reserveOut) / (reserveIn + amountIn);
-
         require(amountOut >= amountOutMin, "Slippage");
 
-        if (tokenIn == tokenAAddres) {
+        if (tokenIn == _tokenAAddres) {
             reserveA += amountIn;
             reserveB -= amountOut;
         } else {
@@ -177,13 +196,21 @@ contract SimpleSwap is ERC20 {
     /// @param tokenB Address
     /// @return price Price with 18 decimals (tokenB per tokenA)
     function getPrice(address tokenA, address tokenB) external view returns (uint256 price) {
+        address _tokenAAddres = tokenAAddres;
+        address _tokenBAddres = tokenBAddres;
+
         require(
-            (tokenA == tokenAAddres && tokenB == tokenBAddres) ||
-            (tokenA == tokenBAddres && tokenB == tokenAAddres),
+            (tokenA == _tokenAAddres && tokenB == _tokenBAddres) ||
+            (tokenA == _tokenBAddres && tokenB == _tokenAAddres),
             "Invalid token pair"
         );
-        require(reserveA > 0 && reserveB > 0, "No reserves");
-        price = (reserveB * 1e18) / reserveA;
+
+        uint256 _reserveA = reserveA;
+        uint256 _reserveB = reserveB;
+
+        require(_reserveA > 0 && _reserveB > 0, "No reserves");
+
+        price = (_reserveB * 1e18) / _reserveA;
     }
 
     /// @notice Computes output amount for a given input and reserves
@@ -198,6 +225,7 @@ contract SimpleSwap is ERC20 {
     {
         require(amountIn > 0, "Zero input");
         require(reserveIn > 0 && reserveOut > 0, "Empty reserves");
+
         return (amountIn * reserveOut) / (reserveIn + amountIn);
     }
 }
